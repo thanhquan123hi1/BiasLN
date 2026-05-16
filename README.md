@@ -29,11 +29,7 @@ BiasLN uses CLIP ViT-L/14 as the visual feature extractor. During training, the 
 
 This design substantially reduces the number of trainable parameters while preserving the strong general-purpose visual representation learned by CLIP.
 
-The architecture illustration is provided as a PDF:
-
-[BiasLN architecture figure](figures/BiasLN.pdf)
-
-GitHub does not render PDF files inline as images in Markdown, so please open the linked file directly for the framework diagram.
+![BiasLN architecture figure](figures/BiasLN.png)
 
 ## Repository Structure
 
@@ -133,7 +129,7 @@ Make sure that dataset names passed through `--train_dataset` and `--test_datase
 
 ## Preprocessing
 
-### Case A: Using Processed [DeepfakeBench](https://github.com/SCLBD/DeepfakeBench) / [DF40](https://github.com/YZY-stack/DF40) Data
+### Case A: Using Processed DeepfakeBench / DF40 data
 
 If you use already processed datasets from [DeepfakeBench](https://github.com/SCLBD/DeepfakeBench) or [DF40](https://github.com/YZY-stack/DF40), raw video preprocessing can be skipped. Place the `rgb/` frames and `dataset_json/` metadata in the expected locations, then update `rgb_dir` and `dataset_json_folder` in the train/test configuration files.
 
@@ -265,31 +261,6 @@ Arguments:
 - `--max_samples`: optional cap on the number of evaluated samples per dataset.
 
 The checkpoint path depends on the configured `log_dir` and the dataset used during validation. After training, inspect the training log directory and the `test/<dataset_name>/ckpt_best.pth` files.
-
-## Testing with 2 GPUs
-
-The provided `training/test.py` script is designed for standard single-process evaluation. It does not currently expose a `--ddp` flag and does not construct distributed samplers for evaluation.
-
-For multi-GPU evaluation, users can either:
-
-1. split the test datasets manually across GPUs and run separate single-process jobs, or
-2. extend `training/test.py` with `DistributedDataParallel` and `DistributedSampler`.
-
-A safe manual split example is:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 python training/test.py \
-  --detector_path ./training/config/detector/biasln.yaml \
-  --test_dataset "Celeb-DF-v2" \
-  --weights_path /path/to/biasln_weights.pth \
-  --feat_out_dir ./outputs/gpu0
-
-CUDA_VISIBLE_DEVICES=1 python training/test.py \
-  --detector_path ./training/config/detector/biasln.yaml \
-  --test_dataset "UADFV" "DFDCP" \
-  --weights_path /path/to/biasln_weights.pth \
-  --feat_out_dir ./outputs/gpu1
-```
 
 ## Results
 
