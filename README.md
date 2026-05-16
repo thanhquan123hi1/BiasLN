@@ -298,5 +298,4 @@ Update file paths inside the analysis scripts to match your experiment outputs.
 This repository follows the [DeepfakeBench](https://github.com/SCLBD/DeepfakeBench)-style training and evaluation pipeline. We thank the [DeepfakeBench](https://github.com/SCLBD/DeepfakeBench) authors for releasing a standardized framework for deepfake detection research.
 
 ## Citation
-
-If you use this repository, please cite the BiasLN paper once available. Until then, please also consider citing [DeepfakeBench](https://github.com/SCLBD/DeepfakeBench) when using the shared benchmark pipeline.
+If you use this repository, please also consider citing DeepfakeBench when using the shared benchmark pipeline.
